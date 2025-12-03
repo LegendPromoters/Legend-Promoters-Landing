@@ -49,6 +49,14 @@ export default function ContactForm() {
       (response) => {
         console.log("SUCCESS!", response.status, response.text);
         alert("Your enquiry has been sent!");
+        setFormData({
+    fullName: "",
+    email: "",
+    phone: "",
+    location: "",
+    interest: "",
+    message: "",
+  });
       },
       (error) => {
         console.error("FAILED...", error);
