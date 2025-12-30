@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import emailjs from "@emailjs/browser";
 
-
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,153 +21,155 @@ export default function ContactForm() {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(formData.email)) {
-    alert("Please enter a valid email address.");
-    return;
-  }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
 
-  // Phone validation
-  const phoneRegex = /^[0-9]{10}$/;
-  if (!phoneRegex.test(formData.phone)) {
-    alert("Phone number must be 10 digits and contain only numbers.");
-    return;
-  }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      alert("Phone number must be 10 digits.");
+      return;
+    }
 
-  emailjs
-    .send(
-      "service_3vnh285",
-      "template_plqbeib",
-      formData,
-      "5TEAcxLK7OEAL0YpZ"
-    )
-    .then(
-      (response) => {
-        console.log("SUCCESS!", response.status, response.text);
-        alert("Your enquiry has been sent!");
-        setFormData({
-    fullName: "",
-    email: "",
-    phone: "",
-    location: "",
-    interest: "",
-    message: "",
-  });
-      },
-      (error) => {
-        console.error("FAILED...", error);
-        alert("Oops! Something went wrong.");
-      }
-    );
-};
+    emailjs
+      .send(
+        "service_3vnh285",
+        "template_plqbeib",
+        formData,
+        "5TEAcxLK7OEAL0YpZ"
+      )
+      .then(
+        () => {
+          alert("Your enquiry has been sent!");
+          setFormData({
+            fullName: "",
+            email: "",
+            phone: "",
+            location: "",
+            interest: "",
+            message: "",
+          });
+        },
+        () => {
+          alert("Oops! Something went wrong.");
+        }
+      );
+  };
 
   return (
     <section
       id="contact"
-      className="relative w-full min-h-screen bg-cover bg-center pt-20 pb-12"
+      className="relative w-full min-h-screen bg-cover bg-center py-28"
       style={{
         backgroundImage:
           "url('https://api.builder.io/api/v1/image/assets/TEMP/e8cb4cb7945a805e819b2a162e8d45f59ecbc0bc?width=2880')",
-        backgroundPosition: "center",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-0">
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
         {/* Heading */}
-        <div className="text-center mb-12 md:mb-16 mt-20">
-          <h2 className="font-display text-white text-4xl sm:text-5xl lg:text-6xl lg:text-7xl font-bold leading-tight">
-            Find Your Dream Property With Us!
-            <span className="block">Contact us today for a free consultation</span>
+        <div className="text-center mb-16">
+          <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-white font-normal">
+            <span className="text-primary_blue font-semibold">
+              Find Your Dream
+            </span>{" "}
+            Property
           </h2>
+
+          <p className="mt-6 text-lg sm:text-xl text-white/80 font-light">
+            Schedule a private consultation with our property experts
+          </p>
+
+          <div className="mt-8 h-[2px] w-40 mx-auto bg-gradient-to-r from-transparent via-primary_blue to-transparent" />
         </div>
 
-
-        {/* Form */}
+        {/* Form Card */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white
-           rounded-2xl p-8 sm:p-12 lg:p-16 space-y-8"
+          className="backdrop-blur-xl bg-white/90 rounded-3xl p-10 sm:p-14 lg:p-16 space-y-10 shadow-[0_40px_80px_rgba(0,0,0,0.25)]"
         >
-          {/* Row 1: Full Name */}
+          {/* Full Name */}
           <div>
-            <label className="block font-display text-lg sm:text-xl mb-3">
-              Full Name <span className="text-primary_blue">*</span>
+            <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+              Full Name *
             </label>
             <input
               type="text"
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
+              className="w-full px-6 py-4 rounded-xl border border-line bg-white focus:outline-none focus:ring-2 focus:ring-primary_blue transition"
               placeholder="Enter your full name"
-              className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base placeholder-grey focus:outline-none focus:border-primary_blue transition"
               required
             />
           </div>
 
-          {/* Row 2: Email and Phone */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Email & Phone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
-              <label className="block font-display text-lg sm:text-xl mb-3">
-                Email Address <span className="text-primary_blue">*</span>
+              <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+                Email Address *
               </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
-                className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base placeholder-grey focus:outline-none focus:border-primary_blue transition"
+                className="w-full px-6 py-4 rounded-xl border border-line bg-white focus:outline-none focus:ring-2 focus:ring-primary_blue transition"
+                placeholder="your@email.com"
                 required
               />
             </div>
+
             <div>
-              <label className="block font-display text-lg sm:text-xl mb-3">
-                Phone Number <span className="text-primary_blue">*</span>
+              <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+                Phone Number *
               </label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="XXXXX XXXXX"
-                className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base placeholder-grey focus:outline-none focus:border-primary_blue transition"
+                className="w-full px-6 py-4 rounded-xl border border-line bg-white focus:outline-none focus:ring-2 focus:ring-primary_blue transition"
+                placeholder="XXXXXXXXXX"
                 required
               />
             </div>
           </div>
 
-          {/* Row 3: Location and Interest */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Location & Interest */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
-              <label className="block font-display text-lg sm:text-xl mb-3">
-                Location/City <span className="text-primary_blue">*</span>
+              <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+                Location / City *
               </label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                placeholder="Enter your city"
-                className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base placeholder-grey focus:outline-none focus:border-primary_blue transition"
+                className="w-full px-6 py-4 rounded-xl border border-line bg-white focus:outline-none focus:ring-2 focus:ring-primary_blue transition"
+                placeholder="Your city"
                 required
               />
             </div>
+
             <div>
-              <label className="block font-display text-lg sm:text-xl mb-3">
-                Interest <span className="text-primary_blue">*</span>
+              <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+                Interest *
               </label>
               <div className="relative">
                 <select
                   name="interest"
                   value={formData.interest}
                   onChange={handleChange}
-                  className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base focus:outline-none focus:border-primary_blue transition appearance-none bg-white"
+                  className="w-full px-6 py-4 rounded-xl border border-line bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary_blue transition"
                   required
                 >
                   <option value="">Select your interest</option>
@@ -177,30 +178,33 @@ export default function ContactForm() {
                   <option value="renting">Renting</option>
                   <option value="investing">Investing</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-grey pointer-events-none" />
+                <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-heading pointer-events-none" />
               </div>
             </div>
           </div>
 
           {/* Message */}
           <div>
-            <label className="block font-display text-lg sm:text-xl mb-3">
-              Message <span className="text-grey">(Optional)</span>
+            <label className="block text-xs uppercase tracking-widest mb-3 text-heading">
+              Message (Optional)
             </label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder="Tell us about your business and requirements"
-              rows="6"
-              className="w-full px-6 py-4 border-2 border-grey rounded-xl font-display text-base placeholder-grey focus:outline-none focus:border-primary_blue transition resize-none"
-            ></textarea>
+              rows="5"
+              className="w-full px-6 py-4 rounded-xl border border-line bg-white focus:outline-none focus:ring-2 focus:ring-primary_blue transition resize-none"
+              placeholder="Tell us your requirements"
+            />
           </div>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-primary_blue text-white font-display text-xl sm:text-2xl font-normal py-5 rounded-2xl hover:bg-opacity-90 transition duration-300"
+            className="w-full py-5 rounded-xl text-white uppercase tracking-widest font-semibold
+                       bg-gradient-to-r from-[#D4AF37] via-[#FFD700] to-[#C9A227]
+                       shadow-[0_15px_40px_rgba(212,175,55,0.45)]
+                       hover:opacity-90 transition"
           >
             Submit Enquiry
           </button>
