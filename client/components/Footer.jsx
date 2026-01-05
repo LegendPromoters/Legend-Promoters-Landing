@@ -52,7 +52,7 @@ export default function Footer() {
             <div className="flex gap-10">
               {[
                 {
-                  href: "https://www.instagram.com/legendpromotersrealestate/",
+                  href: "https://www.instagram.com/legendpromoterss/?igsh=MTB4djBiMmJqdG96aQ%3D%3D#",
                   Icon: Instagram,
                   label: "Instagram",
                 },
